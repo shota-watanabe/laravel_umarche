@@ -22,11 +22,11 @@ class ShopController extends Controller
             // dd(Auth::id()); //数字
 
             $id = $request->route()->parameter('shop'); //shopのid取得
-            if (!is_null($id)) { // null判定
+            if(!is_null($id)){ // null判定
             $shopsOwnerId = Shop::findOrFail($id)->owner->id;
-                $shopId = (int)$shopsOwnerId; // キャスト 文字列→数値に型変換
+                $shopId = (int)$shopsOwnerId;
                 $ownerId = Auth::id();
-                if ($shopId !== $ownerId) { // 同じでなかったら
+                if($shopId !== $ownerId){ // 同じでなかったら
                     abort(404); // 404画面表示
                 }
             }
