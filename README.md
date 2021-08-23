@@ -35,6 +35,7 @@ php artisan migrate:fresh --seed
 最後に php artisan key:generate と入力してキーを生成後、
 
 php artisan serve で簡易サーバーを立ち上げ、表示確認してください。
+
 ## インストール後の実施事項
 
 画像のダミーデータは
@@ -52,3 +53,21 @@ storage/app/public/productsフォルダ内に
 ショップの画像も表示する場合は、
 storage/app/public/productsフォルダを作成し
 画像を保存してください。
+
+## section7の補足
+
+決済のテストとしてspriteを利用しています。
+必要な場合は、.env にspriteの情報を追記してください。
+（講座内で解説しています）
+
+## session8の補足
+
+メールのテストとしてmailtrapを利用しています。
+必要な場合は、.env にmailtrapの情報を追記してください。
+（講座内で解説しています）
+
+メール処理には時間がかかるので、
+キューを使用しています。
+
+必要な場合は、php artisan queue:workで
+ワーカーを立ち上げて動作確認するようにしてください。
