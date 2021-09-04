@@ -10,21 +10,30 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <x-flash-message status="session('status')" />
+                    @foreach ($ownerInfo as $owner)
+                    @if (!empty($owner->shop->product))
                     <div class="flex justify-end mb-4">
                         <button onclick="location.href='{{ route('owner.products.create') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">新規登録する</button>
                       </div>
                       <div class="flex flex-wrap">
-                    @foreach ($ownerInfo as $owner)
                      @foreach ($owner->shop->product as $product)
                         <a href="{{ route('owner.products.edit', ['product' => $product->id]) }}">
                             <div class="w-1/4 p-2 md:p-4">
                             <div class="border rounded-md p-2 md:p-4">
-                                <x-thumbnail filename="{{$product->imageFirst->filename ?? ''}}" type="products"/>
+                                @if (empty($product->imageFirst->filename))
+                                    <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
+                                    @else
+                                    <img src="{{  $product->imageFirst->filename  }}">
+                                @endif
                                 <div class="text-gray-700"><div class="text-x1">{{ $product->name }}</div></div>
                             </div>
                         </a>
                            </div>
                      @endforeach
+                     @else
+                     <div class="bg-red-500 w-1/2 mx-auto p-2 my-4 text-white">
+                        店舗登録をしてください</div>
+                     @endif
                     @endforeach
                     </div>
                 </div>

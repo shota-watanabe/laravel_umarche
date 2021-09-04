@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 use App\Http\Requests\UploadImageRequest;
+use App\Http\Requests\ShopRequest;
 use App\Services\ImageService;
+use Aws\Multipart\UploadState;
 
 class ShopController extends Controller
 {
@@ -22,11 +24,11 @@ class ShopController extends Controller
             // dd(Auth::id()); //数字
 
             $id = $request->route()->parameter('shop'); //shopのid取得
-            if(!is_null($id)){ // null判定
+            if (!is_null($id)) { // null判定
             $shopsOwnerId = Shop::findOrFail($id)->owner->id;
                 $shopId = (int)$shopsOwnerId;
                 $ownerId = Auth::id();
-                if($shopId !== $ownerId){ // 同じでなかったら
+                if ($shopId !== $ownerId) { // 同じでなかったら
                     abort(404); // 404画面表示
                 }
             }
@@ -40,6 +42,38 @@ class ShopController extends Controller
         $shops = Shop::where('owner_id', Auth::id())->get();
 
         return view('owner.shops.index', compact('shops'));
+    }
+
+    public function create()
+    {
+        return view('owner.shops.create');
+    }
+
+    public function store(UploadImageRequest $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'information' => 'required|string|max:1000',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'is_selling' => 'required',
+        ]);
+
+        $imageFile = $request->image; //一時保存
+        if (!is_null($imageFile) && $imageFile->isValid()) {
+            $fileNameToStore = ImageService::upload($imageFile);
+        }
+
+        Shop::create([
+            'owner_id' => Auth::id(),
+            'name' => $request->name,
+            'information' => $request->information,
+            'filename' => $fileNameToStore,
+            'is_selling' => $request->is_selling
+        ]);
+
+        return redirect()
+        ->route('owner.shops.index')
+        ->with(['message' => '店舗登録しました。', 'status' => 'info']);
     }
 
     public function edit($id)
@@ -59,7 +93,7 @@ class ShopController extends Controller
 
         $imageFile = $request->image; //一時保存
         if (!is_null($imageFile) && $imageFile->isValid()) {
-            $fileNameToStore = ImageService::upload($imageFile, 'shops');
+            $fileNameToStore = ImageService::upload($imageFile);
         }
 
         $shop = Shop::findOrFail($id);

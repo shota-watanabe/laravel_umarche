@@ -21,6 +21,7 @@ class CreateImagesTable extends Migration
             ->onDelete('cascade');
             $table->string('filename');
             $table->string('title')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

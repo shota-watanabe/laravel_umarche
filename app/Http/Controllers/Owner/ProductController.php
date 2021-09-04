@@ -41,8 +41,8 @@ class ProductController extends Controller
         // $products = Owner::findOrFail(Auth::id())->shop->product;
 
         $ownerInfo = Owner::with('shop.product.imageFirst')
-        ->where('id', Auth::id())->get();
-
+        ->where('id', Auth::id())
+        ->get();
         // dd($ownerInfo);
         /* foreach($ownerInfo as $owner){
             // dd($owner->shop->product);
@@ -51,7 +51,8 @@ class ProductController extends Controller
             }
         } */
 
-        return view('owner.products.index', compact('ownerInfo'));
+        return view('owner.products.index', compact('ownerInfo'))
+        ->with(['message' => '商品登録しました。', 'status' => 'info']);
     }
 
     public function create()

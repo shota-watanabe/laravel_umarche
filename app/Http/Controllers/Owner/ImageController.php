@@ -18,12 +18,11 @@ class ImageController extends Controller
         $this->middleware('auth:owners');
 
         $this->middleware(function ($request, $next) {
-
             $id = $request->route()->parameter('image');
-            if(!is_null($id)){
-            $imagesOwnerId = Image::findOrFail($id)->owner->id;
+            if (!is_null($id)) {
+                $imagesOwnerId = Image::findOrFail($id)->owner->id;
                 $imageId = (int)$imagesOwnerId;
-                if($imageId !== Auth::id()){
+                if ($imageId !== Auth::id()) {
                     abort(404);
                 }
             }
@@ -47,12 +46,21 @@ class ImageController extends Controller
     public function store(UploadImageRequest $request)
     {
         $imageFiles =  $request->file('files');
-        if(!is_null($imageFiles)){
-            foreach($imageFiles as $imageFile){
-                $fileNameToStore = ImageService::upload($imageFile, 'products');
+
+        if (!is_null($imageFiles)) {
+            foreach ($imageFiles as $imageFile) {
+
+                if (is_array($imageFile)) {
+                    $file = $imageFile['image']; // 配列なので[‘key’] で取得
+                } else {
+                    $file = $imageFile;
+                }
+        
+                $path = ImageService::upload($imageFile);
+
                 Image::create([
                     'owner_id' => Auth::id(),
-                    'filename' => $fileNameToStore
+                    'filename' => $path
                 ]);
             }
         }
@@ -92,30 +100,30 @@ class ImageController extends Controller
         ->orWhere('image4', $image->id)
         ->get();
 
-        if($imageInProducts){
-            $imageInProducts->each(function($product) use($image){
-                if($product->image1 === $image->id){
+        if ($imageInProducts) {
+            $imageInProducts->each(function ($product) use ($image) {
+                if ($product->image1 === $image->id) {
                     $product->image1 = null;
                     $product->save();
                 }
-                if($product->image2 === $image->id){
+                if ($product->image2 === $image->id) {
                     $product->image2 = null;
                     $product->save();
                 }
-                if($product->image3 === $image->id){
+                if ($product->image3 === $image->id) {
                     $product->image3 = null;
                     $product->save();
                 }
-                if($product->image4 === $image->id){
+                if ($product->image4 === $image->id) {
                     $product->image4 = null;
                     $product->save();
                 }
             });
         }
-        $filePath = 'public/products/' . $image->filename;
+        $filePath = $image->image_path;
 
-        if(Storage::exists($filePath)){
-            Storage::delete($filePath);
+        if (Storage::disk('s3')->exists($filePath)) {
+            Storage::disk('s3')->delete($filePath);
         }
         
         Image::findOrFail($id)->delete();

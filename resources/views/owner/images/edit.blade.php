@@ -22,7 +22,11 @@
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="w-32">
-                                  <x-thumbnail :filename="$image->filename" type="products"/>
+                                  @if (empty($image->filename))
+                                  <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
+                                  @else
+                                  <img src="{{  $image->filename  }}">
+                                  @endif
                                 </div>
                               </div>
                               <div class="p-2 w-full flex justify-around mt-4">
