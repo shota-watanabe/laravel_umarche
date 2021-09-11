@@ -43,9 +43,26 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('admin.logout') }}">
+                        <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
+                            <x-dropdown-link :href="route('user.logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('ユーザー') }}
+                            </x-dropdown-link>
+                        </form>
+                        <form method="POST" action="{{ route('owner.logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('owner.logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('オーナー') }}
+                            </x-dropdown-link>
+                        </form>
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
                             <x-dropdown-link :href="route('admin.logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -91,14 +108,31 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('admin.logout') }}">
+                <form method="POST" action="{{ route('admin.changeUser') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('admin.logout')"
+                    <x-responsive-nav-link :href="route('admin.changeUser')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('ユーザー') }}
+                    </x-responsive-nav-link>
+                </form>
+                <form method="POST" action="{{ route('admin.changeOwner') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('admin.changeOwner')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('オーナー') }}
+                    </x-responsive-nav-link>
+                </form>
+                <form method="POST" action="{{ route('admin.logout') }}">
+                    @csrf
+                    <x-dropdown-link :href="route('admin.logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    </x-dropdown-link>
                 </form>
             </div>
         </div>

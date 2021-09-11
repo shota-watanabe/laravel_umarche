@@ -61,7 +61,11 @@
                             <a href="{{ route('user.items.show', ['item' => $product->id]) }}">
                                 <div class="w-1/4 p-2 md:p-4">
                                     <div class="border rounded-md p-2 md:p-4">
-                                        <x-thumbnail filename="{{ $product->filename ?? '' }}" type="products" />
+                                        @if (empty($product->filename))
+                                        <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
+                                        @else
+                                        <img src="{{  $product->filename  }}">
+                                        @endif
                                         <div class="mt-4">
                                             <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
                                                 {{ $product->category }}</h3>

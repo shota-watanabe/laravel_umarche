@@ -62,3 +62,11 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth:users')
                 ->name('logout');
+
+Route::post('/changeOwner', [AuthenticatedSessionController::class, 'changeOwner'])
+                ->middleware('auth:users')
+                ->name('changeOwner');
+
+Route::post('/changeAdmin', [AuthenticatedSessionController::class, 'changeAdmin'])
+                ->middleware('auth:users')
+                ->name('changeAdmin');

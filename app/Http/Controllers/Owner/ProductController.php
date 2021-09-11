@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProductRequest;
- 
 
 class ProductController extends Controller
 {
@@ -24,12 +23,11 @@ class ProductController extends Controller
         $this->middleware('auth:owners');
 
         $this->middleware(function ($request, $next) {
-
             $id = $request->route()->parameter('product');
-            if(!is_null($id)){
-            $productsOwnerId = Product::findOrFail($id)->shop->owner->id;
+            if (!is_null($id)) {
+                $productsOwnerId = Product::findOrFail($id)->shop->owner->id;
                 $productId = (int)$productsOwnerId;
-                if($productId !== Auth::id()){
+                if ($productId !== Auth::id()) {
                     abort(404);
                 }
             }
@@ -124,9 +122,10 @@ class ProductController extends Controller
         $categories = PrimaryCategory::with('secondary')
         ->get();
 
-        return view('owner.products.edit', 
-        compact('product', 'quantity', 'shops', 'images', 'categories'));
-
+        return view(
+            'owner.products.edit',
+            compact('product', 'quantity', 'shops', 'images', 'categories')
+        );
     }
 
     public function update(ProductRequest $request, $id)
@@ -139,12 +138,11 @@ class ProductController extends Controller
         $quantity = Stock::where('product_id', $product->id)
         ->sum('quantity');
 
-        if($request->current_quantity !== $quantity){
+        if ($request->current_quantity !== $quantity) {
             $id = $request->route()->parameter('product');
             return redirect()->route('owner.products.edit', ['product' => $id])
             ->with(['message' => '在庫数が変更されています。再度確認してください。', 'status' => 'alert']);
-        }else{
-            
+        } else {
             try {
                 DB::transaction(function () use ($request, $product) {
                     $product->name = $request->name;
@@ -160,10 +158,10 @@ class ProductController extends Controller
                     $product->is_selling = $request->is_selling;
                     $product->save();
 
-                    if($request->type === \Constant::PRODUCT_LIST['add']){
+                    if ($request->type === \Constant::PRODUCT_LIST['add']) {
                         $newQuantity = $request->quantity;
                     }
-                    if($request->type === \Constant::PRODUCT_LIST['reduce']){
+                    if ($request->type === \Constant::PRODUCT_LIST['reduce']) {
                         $newQuantity = $request->quantity * -1;
                     }
                     Stock::create([
@@ -184,7 +182,7 @@ class ProductController extends Controller
     }
 
     public function destroy($id)
-    {   
+    {
         Product::findOrFail($id)->delete();
 
         return redirect()

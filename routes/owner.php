@@ -49,12 +49,12 @@ Route::get('/dashboard', function () {
     return view('owner.dashboard');
 })->middleware(['auth:owners'])->name('dashboard');
 
-/* Route::get('/register', [RegisteredUserController::class, 'create'])
+Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
                 ->name('register');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest'); */
+                ->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
@@ -101,3 +101,11 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth:owners')
                 ->name('logout');
+
+Route::post('/changeUser', [AuthenticatedSessionController::class, 'changeUser'])
+                ->middleware('auth:owners')
+                ->name('changeUser');
+
+Route::post('/changeAdmin', [AuthenticatedSessionController::class, 'changeAdmin'])
+                ->middleware('auth:owners')
+                ->name('changeAdmin');

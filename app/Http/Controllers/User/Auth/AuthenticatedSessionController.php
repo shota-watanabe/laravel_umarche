@@ -51,4 +51,26 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function changeOwner(Request $request)
+    {
+        Auth::guard('users')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/owner/login');
+    }
+
+    public function changeAdmin(Request $request)
+    {
+        Auth::guard('users')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/admin/login');
+    }
 }

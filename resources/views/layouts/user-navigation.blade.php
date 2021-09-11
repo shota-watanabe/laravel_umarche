@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('user.cart.index')" :active="request()->routeIs('user.cart.index')">
                         カートを表示
                     </x-nav-link>
+                    <x-nav-link :href="route('user.likes.index')" :active="request()->routeIs('user.likes.index')">
+                        お気に入り一覧
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -40,13 +43,31 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        <form method="POST" action="{{ route('user.changeOwner') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('user.changeOwner')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('オーナー') }}
+                            </x-dropdown-link>
+                        </form>
+                        <form method="POST" action="{{ route('user.changeAdmin') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('user.changeAdmin')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('管理者') }}
+                            </x-dropdown-link>
+                        </form>
                         <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('user.logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log out') }}
+                                {{ __('ログアウト') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -74,6 +95,9 @@
             <x-responsive-nav-link :href="route('user.cart.index')" :active="request()->routeIs('user.cart.index')">
                 カートを表示
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.likes.index')" :active="request()->routeIs('user.likes.index')">
+                お気に入り一覧
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -93,13 +117,31 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
+                <form method="POST" action="{{ route('owner.logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('owner.logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('オーナー') }}
+                    </x-responsive-nav-link>
+                </form>
+                <form method="POST" action="{{ route('admin.logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('admin.logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('管理者') }}
+                    </x-responsive-nav-link>
+                </form>
                 <form method="POST" action="{{ route('user.logout') }}">
                     @csrf
 
                     <x-responsive-nav-link :href="route('user.logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log out') }}
+                        {{ __('ログアウト') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
