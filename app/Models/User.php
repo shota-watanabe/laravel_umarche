@@ -54,4 +54,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'likes')
         ->withPivot(['id','created_at']);
     }
+
+    public function sendPasswordResetNotification($token)
+    {
+
+        $this->notify(new ResetPassword($token));
+
+    }
 }

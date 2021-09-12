@@ -54,6 +54,11 @@
                     {{ __('Log in') }}
                 </x-button>
             </div>
+            <div class="flex items-center justify-around">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('admin.register') }}">
+                    {{ __('新規登録はこちら') }}
+                </a>
+            </div>
         </form>
     </x-auth-card>
 </x-guest-layout>

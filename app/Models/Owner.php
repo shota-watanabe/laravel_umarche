@@ -8,10 +8,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Shop;
 use App\Models\Image;
+use App\Notifications\Owner\ResetPassword;
+use Illuminate\Support\Facades\Password;
 
 class Owner extends Authenticatable
 {
     use HasFactory, SoftDeletes;
+
+   /**
+    *パスワードリセットに使われるブローカの取得
+    *
+    * @return PasswordBroker
+    */
+    protected function broker()
+    {
+        return Password::broker('owners');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -51,5 +63,10 @@ class Owner extends Authenticatable
     public function image()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
