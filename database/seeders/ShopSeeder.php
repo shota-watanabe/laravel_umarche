@@ -19,14 +19,14 @@ class ShopSeeder extends Seeder
                 'owner_id' => '1',
                 'name' => 'ここに店名が入ります',
                 'information' => 'ここにお店の情報が入ります。ここにお店の情報が入ります。ここにお店の情報が入ります。',
-                'filename' => 'sample1.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/buildings_263907238.jpg',
                 'is_selling' => true
             ],
             [
                 'owner_id' => '2',
                 'name' => 'ここに店名が入ります',
                 'information' => 'ここにお店の情報が入ります。ここにお店の情報が入ります。ここにお店の情報が入ります。',
-                'filename' => 'sample2.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/south-station_341897155.jpg',
                 'is_selling' => true
             ],
         ]);

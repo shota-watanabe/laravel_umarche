@@ -17,32 +17,32 @@ class ImageSeeder extends Seeder
         DB::table('images')->insert([
             [
                 'owner_id' => '1',
-                'filename' => 'sample1.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/gift1_1405296092.jpg',
                 'title' => null
             ],
             [
                 'owner_id' => '1',
-                'filename' => 'sample2.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/gift2_136513965.jpg',
                 'title' => null
             ],
             [
                 'owner_id' => '1',
-                'filename' => 'sample3.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/gift3_478393583.jpg',
                 'title' => null
             ],
             [
                 'owner_id' => '1',
-                'filename' => 'sample4.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/gift4_1323943721.jpg',
                 'title' => null
             ],
             [
                 'owner_id' => '1',
-                'filename' => 'sample5.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/gift5_776091544.jpg',
                 'title' => null
             ],
             [
                 'owner_id' => '1',
-                'filename' => 'sample6.jpg',
+                'filename' => 'https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/present_1443180722.jpg',
                 'title' => null
             ],
         ]);

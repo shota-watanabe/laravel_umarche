@@ -10,6 +10,7 @@ use App\Models\Image;
 use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -58,11 +59,24 @@ class Product extends Model
         return $this->hasMany(Stock::class);
     }
 
-    public function users()
+    /* public function users()
     {
         return $this->belongsToMany(Product::class, 'carts')
         ->withPivot(['id', 'quantity']);
     }
+
+    public function users_likes()
+    {
+        return $this->belongsToMany(Product::class, 'likes')
+        ->withPivot(['id', 'created_at']);
+    } */
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+
 
     public function scopeAvailableItems($query)
     {
@@ -121,13 +135,33 @@ class Product extends Model
             $keywords = preg_split('/[\s]+/', $spaceConvert, -1, PREG_SPLIT_NO_EMPTY);
 
             // 単語をループで回す
-            foreach ($keywords as $word) 
-            {
+            foreach ($keywords as $word) {
                 $query->where('products.name', 'like', '%'.$word.'%');
             }
             return $query;
         } else {
             return;
+        }
+    }
+
+    /**
+    * リプライにLIKEを付いているかの判定
+    *
+    * @return bool true:Likeがついてる false:Likeがついてない
+    */
+    public function is_liked_by_auth_user()
+    {
+        $id = Auth::id();
+
+        $likers = array();
+        foreach ($this->likes as $like) {
+            array_push($likers, $like->user_id);
+        }
+
+        if (in_array($id, $likers)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

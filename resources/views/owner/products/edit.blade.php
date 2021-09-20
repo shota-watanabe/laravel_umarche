@@ -141,7 +141,7 @@
                 const imageFile = e.target.dataset.file
                 const imagePath = e.target.dataset.path
                 const modal = e.target.dataset.modal
-                document.getElementById(imageName + '_thumbnail').src = imagePath + '/' + imageFile
+                document.getElementById(imageName + '_thumbnail').src = imageFile
                 document.getElementById(imageName + '_hidden').value = imageId
                 MicroModal.close(modal);
             }, )

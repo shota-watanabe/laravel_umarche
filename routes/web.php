@@ -5,6 +5,7 @@ use App\Http\Controllers\ComponentTestController;
 use App\Http\Controllers\LifeCycleTestController;
 use App\Http\Controllers\User\ItemController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,13 @@ Route::prefix('cart')->middleware('auth:users')->group(function () {
     Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('success', [CartController::class, 'success'])->name('cart.success');
     Route::get('cancel', [CartController::class, 'cancel'])->name('cart.cancel');
+});
+
+Route::middleware('auth:users')->group(function () {
+    Route::get('like', [LikeController::class, 'index'])->name('likes.index');
+    Route::post('like/{item}', [LikeController::class, 'like'])->name('like');
+    Route::post('unlike/{item}', [LikeController::class, 'unlike'])->name('unlike');
+    Route::get('show/{item}', [ItemController::class, 'show'])->name('items.show');
 });
 
 Route::get('/component-test1', [ComponentTestController::class, 'showComponent1']);

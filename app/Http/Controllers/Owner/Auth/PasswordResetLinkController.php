@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Owner\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
 
 class PasswordResetLinkController extends Controller
 {
@@ -43,5 +46,10 @@ class PasswordResetLinkController extends Controller
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))
                             ->withErrors(['email' => __($status)]);
+    }
+
+    public function broker()
+    {
+        return Password::broker('owners');
     }
 }

@@ -28,12 +28,16 @@ use Illuminate\Support\Facades\Route;
     return view('owner.welcome');
 }); */
 
-Route::prefix('shops')
+/* Route::prefix('shops')
 ->middleware('auth:owners')->group(function(){
     Route::get('index', [ShopController::class, 'index'])->name('shops.index');
     Route::get('edit/{shop}', [ShopController::class, 'edit'])->name('shops.edit');
     Route::post('update/{shop}', [ShopController::class, 'update'])->name('shops.update');
-    });
+    Route::post('create', [ShopController::class, 'create'])->name('shops.create');
+    }); */
+
+Route::resource('shops', ShopController::class)
+->middleware('auth:owners')->except('[show]', '[destroy]');
 
 Route::resource('images', ImageController::class)
 ->middleware('auth:owners')->except('[show]');
@@ -45,12 +49,12 @@ Route::get('/dashboard', function () {
     return view('owner.dashboard');
 })->middleware(['auth:owners'])->name('dashboard');
 
-/* Route::get('/register', [RegisteredUserController::class, 'create'])
+Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
                 ->name('register');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest'); */
+                ->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
@@ -58,6 +62,10 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest');
+
+Route::get('/guest-login', [AuthenticatedSessionController::class, 'guestLogin'])
+                ->middleware('guest')
+                ->name('owner.guest');
 
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->middleware('guest')
@@ -97,3 +105,11 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth:owners')
                 ->name('logout');
+
+Route::post('/changeUser', [AuthenticatedSessionController::class, 'changeUser'])
+                ->middleware('auth:owners')
+                ->name('changeUser');
+
+Route::post('/changeAdmin', [AuthenticatedSessionController::class, 'changeAdmin'])
+                ->middleware('auth:owners')
+                ->name('changeAdmin');

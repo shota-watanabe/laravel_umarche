@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Product;
+use App\Notifications\User\ResetPassword;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'carts')
         ->withPivot(['id', 'quantity']);
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Product::class, 'likes')
+        ->withPivot(['id','created_at']);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+
+        $this->notify(new ResetPassword($token));
+
     }
 }

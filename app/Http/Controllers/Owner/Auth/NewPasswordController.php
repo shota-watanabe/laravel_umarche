@@ -18,9 +18,9 @@ class NewPasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function create(Request $request)
+    public function create(Request $request, $token = null)
     {
-        return view('owner.auth.reset-password', ['request' => $request]);
+        return view('owner.auth.reset-password', ['token' => $token, 'email' => $request->email]);
     }
 
     /**

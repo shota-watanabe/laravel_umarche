@@ -18,7 +18,11 @@
                         <a href="{{ route('owner.images.edit', ['image' => $image->id]) }}">
                             <div class="w-1/4 p-2 md:p-4">
                             <div class="border rounded-md p-2 md:p-4">
-                                <x-thumbnail :filename="$image->filename" type="products"/>
+                                @if (empty($image->filename))
+                                <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
+                                @else
+                                <img src="{{  $image->filename  }}">
+                                @endif
                                 <div class="text-gray-700"><div class="text-x1">{{ $image->title }}</div></div>
                             </div>
                         </a>

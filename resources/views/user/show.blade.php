@@ -19,33 +19,33 @@
                                     <div class="swiper-slide">
                                         @if ($product->imageFirst->filename !== null)
                                             <img
-                                                src="{{ asset('storage/products/' . $product->imageFirst->filename) }}">
+                                                src="{{ $product->imageFirst->filename }}">
                                         @else
-                                            <img src="">
+                                            <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
                                         @endif
                                     </div>
                                     <div class="swiper-slide">
-                                        @if ($product->imageSecond->filename !== null)
+                                        @if (optional($product->imageSecond)->filename !== null)
                                             <img
-                                                src="{{ asset('storage/products/' . $product->imageSecond->filename) }}">
+                                                src="{{ $product->imageSecond->filename }}">
                                         @else
-                                            <img src="">
+                                            <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
                                         @endif
                                     </div>
                                     <div class="swiper-slide">
-                                        @if ($product->imageThird->filename !== null)
+                                        @if (optional($product->imageThird)->filename !== null)
                                             <img
-                                                src="{{ asset('storage/products/' . $product->imageThird->filename) }}">
+                                                src="{{  $product->imageThird->filename }}">
                                         @else
-                                            <img src="">
+                                            <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
                                         @endif
                                     </div>
                                     <div class="swiper-slide">
-                                        @if ($product->imageFourth->filename !== null)
+                                        @if (optional($product->imageFourth)->filename !== null)
                                             <img
-                                                src="{{ asset('storage/products/' . $product->imageFourth->filename) }}">
+                                                src="{{ $product->imageFourth->filename }}">
                                         @else
-                                            <img src="">
+                                            <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
                                         @endif
                                     </div>
                                 </div>
@@ -88,6 +88,30 @@
                                         class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">カートに入れる</button>
                                         <input type="hidden" name="product_id" value="{{ $product->id}}">
                                 </form>
+                                <!-- もし$likeがあれば＝ユーザーが「いいね」をしていたら -->
+                                @if($product->is_liked_by_auth_user())
+                                <!-- 「いいね」取消用ボタンを表示 -->
+                                <form method="post" action="{{ route('user.unlike', ['item' => $product->id ])}}"> 
+                                @csrf
+                                <button class="p-0 border-0 inline-flex items-center justify-center text-red-500 ml-4">
+                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                                    </svg>
+                                </button>
+                                <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                </form>
+                                @else
+                                <!-- まだユーザーが「いいね」をしていなければ、「いいね」ボタンを表示 -->
+                                <form method="post" action="{{ route('user.like', ['item' => $product->id ])}}">
+                                @csrf
+                                <button class="p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+                                      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                                    </svg>
+                                </button>
+                                <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                </form>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -97,9 +121,9 @@
                     <div class="mx-auto mb-4 text-center">
                         @if ($product->shop->filename !== null)
                             <img class="mx-auto w-40 h-40 object-cover rounded-full"
-                                src="{{ asset('storage/shops/' . $product->shop->filename) }}">
+                                src="{{ $product->shop->filename }}">
                         @else
-                            <img src="">
+                            <img src="https://watasho-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpg">
                         @endif
                     </div>
                     <div class="mb-4 text-center"><button type="button" data-micromodal-trigger="modal-1"

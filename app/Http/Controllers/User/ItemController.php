@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Like;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\PrimaryCategory;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -54,6 +57,7 @@ class ItemController extends Controller
 
     public function show($id)
     {
+        $user = User::findOrFail(Auth::id());
         $product = Product::findOrFail($id);
         $quantity = Stock::where('product_id', $product->id)
         ->sum('quantity');
@@ -61,6 +65,7 @@ class ItemController extends Controller
         if($quantity > 9){
             $quantity = 9;
         }
+        // $like = Like::where('product_id', $product)->where('user_id', Auth::id());
 
         return view('user.show', compact('product', 'quantity'));
     }
