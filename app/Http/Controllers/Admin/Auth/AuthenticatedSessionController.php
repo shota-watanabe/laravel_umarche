@@ -10,6 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
+    // ゲストログイン処理
+    public function guestLogin()
+    {
+        $guard = 'admin';
+        $email = 'admin@admin.com';
+        $password = 'password123';
+
+        if (Auth::guard($guard)->attempt(['email' => $email, 'password' => $password])) {
+            return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+        }
+        return redirect('/admin/login');
+
+    }
+
     /**
      * Display the login view.
      *

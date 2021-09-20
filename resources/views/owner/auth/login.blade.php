@@ -42,21 +42,24 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('owner.password.request'))
+                {{-- @if (Route::has('owner.password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('owner.password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif
+                @endif --}}
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('owner.register') }}">
+                    {{ __('新規登録はこちら') }}
+                </a>
 
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>
-            <div class="flex items-center justify-around">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('owner.register') }}">
-                    {{ __('新規登録はこちら') }}
-                </a>
-            </div>
         </form>
+        <div class="flex items-center justify-end mt-4">
+            <x-button type="submit" class="ml-3">
+                <a href="/owner/guest-login">ゲストログイン</a>
+            </x-button>
+        </div>
     </x-auth-card>
 </x-guest-layout>

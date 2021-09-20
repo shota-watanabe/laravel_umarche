@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="md:w-4/12 md:ml-2"><a class="underline text-sm text-blue-600 hover:text-blue-900" href="{{ route('user.items.show', ['item' => $product->id ]) }}">{{ $product->name }}</a></div>
                                 <div class="md:w-3/12 flex justify-around">
-                                    <div>{{ number_format($product->pivot->quantity * $product->price) }}<span
+                                    <div>{{ number_format($product->price) }}<span
                                             class="text-sm text-gray-700">円(税込)</span></div>
                                 </div>
                                 <div class="md:w-2/12">

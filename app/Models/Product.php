@@ -59,7 +59,7 @@ class Product extends Model
         return $this->hasMany(Stock::class);
     }
 
-    public function users()
+    /* public function users()
     {
         return $this->belongsToMany(Product::class, 'carts')
         ->withPivot(['id', 'quantity']);
@@ -69,7 +69,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Product::class, 'likes')
         ->withPivot(['id', 'created_at']);
-    }
+    } */
 
     public function likes()
     {
@@ -145,10 +145,10 @@ class Product extends Model
     }
 
     /**
-  * リプライにLIKEを付いているかの判定
-  *
-  * @return bool true:Likeがついてる false:Likeがついてない
-  */
+    * リプライにLIKEを付いているかの判定
+    *
+    * @return bool true:Likeがついてる false:Likeがついてない
+    */
     public function is_liked_by_auth_user()
     {
         $id = Auth::id();
