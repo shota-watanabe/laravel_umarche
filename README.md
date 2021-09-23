@@ -69,7 +69,6 @@ image5を作成し、Controller側ではimage４まで保存対象とする（im
 - bootstrap
 - JavaScript
 - Swiper.js
-- JavaScript
 - AWS
     - VPC
     - EC2
