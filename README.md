@@ -13,6 +13,11 @@ Laravelが搭載している認証機能を活用し、管理者、オーナー�
 メールアドレス：`test1@test.com`   　　パスワード：password1234  
 【管理者】
 メールアドレス：`admin@admin.com`   　　パスワード：password1234  
+
+テスト決済用カード情報  
+【番号】4242 4242 4242 4242  
+【年月日】未来の数字  
+【CVC】適当な数字  
 ## 使用画面  
 
 <img width="1024" alt="user:home" src="https://user-images.githubusercontent.com/34031637/134280413-0b32a901-1421-49ba-bae7-33f251fdef1c.png">
