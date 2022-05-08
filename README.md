@@ -1,5 +1,5 @@
 ## マルチログイン機能を構築した本格的なECサイト
-# [laravel_umarche](http://umarche0920.net)
+# [laravel_umarche](http://umarche0920.net)(停止中)
 ## サービス概要
 Laravelが搭載している認証機能を活用し、管理者、オーナー、ユーザーと3つのログイン情報を持たせた本格的なECサイトです。  
 
